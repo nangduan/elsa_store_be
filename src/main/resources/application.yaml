@@ -1,0 +1,23 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+  servlet:
+    context-path: /elsa-store/api
+spring:
+  application:
+    name: elsa_store
+  datasource:
+    url: jdbc:mysql://localhost:3306/elsa_store_db
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+jwt:
+  signer-key: "6lhXE9HRxzm7EyIVWdl0XPx9eoGdgXm8VNfpaBQ1dUDpZF6NcF8z4fDAO15JFAdF" # Q8vU1eAgYjocmEtP
+  valid-duration: 3600 # 1 tiếng
+  refreshable-duration: 604800 # 7 ngày
+
+file:
+  upload-dir: uploads/
