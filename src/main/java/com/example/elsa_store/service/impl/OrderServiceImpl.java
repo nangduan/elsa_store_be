@@ -128,6 +128,7 @@ public class OrderServiceImpl implements OrderService {
                 OrderResponse.OrderItemResponse ir = new OrderResponse.OrderItemResponse();
                 ir.setProductVariantId(item.getProductVariant().getId());
                 ir.setProductName(item.getProductVariant().getProduct().getName());
+                ir.setPathImage(item.getProductVariant().getImageUrl());
                 ir.setQuantity(item.getQuantity());
                 ir.setUnitPrice(item.getUnitPrice());
                 ir.setLineTotal(item.getLineTotal());

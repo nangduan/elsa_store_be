@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/payments")
+@RequestMapping("/payment")
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -50,9 +50,10 @@ public class PaymentController {
     }
 
     @GetMapping("/vn-pay")
-    public ApiResponse<PaymentResponse> pay(HttpServletRequest request) {
+    public ApiResponse<PaymentVnPayResponse> pay(HttpServletRequest request) {
         return ApiResponse.ok(paymentService.createVnPayPayment(request));
     }
+
     @GetMapping("/vn-pay-callback")
     public ApiResponse<PaymentVnPayResponse> payCallbackHandler(HttpServletRequest request) {
         String status = request.getParameter("vnp_ResponseCode");

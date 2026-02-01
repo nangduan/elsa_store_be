@@ -3,6 +3,7 @@ package com.example.elsa_store.service;
 
 import com.example.elsa_store.dto.request.PaymentRequest;
 import com.example.elsa_store.dto.response.PaymentResponse;
+import com.example.elsa_store.dto.response.PaymentVnPayResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface PaymentService {
     void delete(Long id);
     PaymentResponse getById(Long id);
     List<PaymentResponse> getAll();
-    PaymentResponse createVnPayPayment(HttpServletRequest request);
+    PaymentVnPayResponse createVnPayPayment(HttpServletRequest request);
 }

@@ -21,3 +21,12 @@ jwt:
 
 file:
   upload-dir: uploads/
+
+vnpay:
+  tmnCode : "KUHZ6TQJ"
+  secretKey : "K20SB7Q7577Q70YWF5I512BL3IX95TP4"
+  url : "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
+  returnUrl : "http://localhost:8080/elsa-store/api/payment/vn-pay-callback"
+  version : "2.1.0"
+  command : "pay"
+  orderType : "other"
