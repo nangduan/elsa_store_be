@@ -104,6 +104,13 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
+    @Override
+    public List<OrderResponse> getAllByUser(Long userId) {
+        return orderRepository.findAllByUser_Id(userId).stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
 
     @Override
     public void delete(Long id) {

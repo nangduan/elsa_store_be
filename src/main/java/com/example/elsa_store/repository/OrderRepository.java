@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    List<Order> findAllByUser_Id(Long userId);
+
     @Query("""
         select
             count(o.id),
