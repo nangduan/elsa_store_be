@@ -1,7 +1,11 @@
 
 package com.example.elsa_store.entity;
 
+<<<<<<< HEAD
 import com.example.elsa_store.entity.enums.Role;
+=======
+import com.example.elsa_store.constant.Role;
+>>>>>>> upstream/develop
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

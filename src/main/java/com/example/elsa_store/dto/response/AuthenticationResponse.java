@@ -1,6 +1,10 @@
 package com.example.elsa_store.dto.response;
 
+<<<<<<< HEAD
 import com.example.elsa_store.entity.enums.Role;
+=======
+import com.example.elsa_store.constant.Role;
+>>>>>>> upstream/develop
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

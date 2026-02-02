@@ -15,6 +15,10 @@ import java.util.List;
 public class OrderRequest {
 
     private Long customerId;
+<<<<<<< HEAD
+=======
+    private Long userId;
+>>>>>>> upstream/develop
     private Long addressId;
 
     @NotNull

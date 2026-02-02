@@ -1,6 +1,10 @@
 package com.example.elsa_store.dto.request;
 
+<<<<<<< HEAD
 import com.example.elsa_store.entity.enums.Role;
+=======
+import com.example.elsa_store.constant.Role;
+>>>>>>> upstream/develop
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

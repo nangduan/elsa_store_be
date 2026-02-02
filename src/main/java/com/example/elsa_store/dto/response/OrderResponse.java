@@ -46,6 +46,10 @@ public class OrderResponse {
     public static class OrderItemResponse {
         private Long productVariantId;
         private String productName;
+<<<<<<< HEAD
+=======
+        private String pathImage;
+>>>>>>> upstream/develop
         private Integer quantity;
         private Double unitPrice;
         private Double lineTotal;
@@ -58,6 +62,13 @@ public class OrderResponse {
 
         public void setProductName(String productName) { this.productName = productName; }
 
+<<<<<<< HEAD
+=======
+        public String getPathImage() { return pathImage; }
+
+        public void setPathImage(String pathImage) { this.pathImage = pathImage; }
+
+>>>>>>> upstream/develop
         public Integer getQuantity() { return quantity; }
 
         public void setQuantity(Integer quantity) { this.quantity = quantity; }

@@ -10,5 +10,9 @@ public interface OrderService {
     OrderResponse create(OrderRequest request);
     OrderResponse getById(Long id);
     List<OrderResponse> getAll();
+<<<<<<< HEAD
+=======
+    List<OrderResponse> getAllByUser(Long userId);
+>>>>>>> upstream/develop
     void delete(Long id);
 }

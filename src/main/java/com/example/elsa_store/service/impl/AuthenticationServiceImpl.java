@@ -15,7 +15,10 @@ import com.example.elsa_store.dto.request.RefreshTokenRequest;
 import com.example.elsa_store.dto.response.AuthenticationResponse;
 import com.example.elsa_store.dto.response.IntrospectResponse;
 import com.example.elsa_store.entity.*;
+<<<<<<< HEAD
 import com.example.elsa_store.entity.enums.Role;
+=======
+>>>>>>> upstream/develop
 import com.example.elsa_store.repository.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

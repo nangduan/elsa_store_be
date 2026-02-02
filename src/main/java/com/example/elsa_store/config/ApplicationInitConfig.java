@@ -2,7 +2,11 @@ package com.example.elsa_store.config;
 
 
 import com.example.elsa_store.entity.User;
+<<<<<<< HEAD
 import com.example.elsa_store.entity.enums.Role;
+=======
+import com.example.elsa_store.constant.Role;
+>>>>>>> upstream/develop
 import com.example.elsa_store.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

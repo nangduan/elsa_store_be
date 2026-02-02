@@ -3,7 +3,13 @@ package com.example.elsa_store.controller;
 
 import com.example.elsa_store.dto.request.PaymentRequest;
 import com.example.elsa_store.dto.response.PaymentResponse;
+<<<<<<< HEAD
 import com.example.elsa_store.service.PaymentService;
+=======
+import com.example.elsa_store.dto.response.PaymentVnPayResponse;
+import com.example.elsa_store.service.PaymentService;
+import jakarta.servlet.http.HttpServletRequest;
+>>>>>>> upstream/develop
 import jakarta.validation.Valid;
 import com.example.elsa_store.dto.common.ApiResponse;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping("/payments")
+=======
+@RequestMapping("/payment")
+>>>>>>> upstream/develop
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -46,4 +56,22 @@ public class PaymentController {
     public ApiResponse<List<PaymentResponse>> getAll() {
         return ApiResponse.ok(paymentService.getAll());
     }
+<<<<<<< HEAD
+=======
+
+    @GetMapping("/vn-pay")
+    public ApiResponse<PaymentVnPayResponse> pay(HttpServletRequest request) {
+        return ApiResponse.ok(paymentService.createVnPayPayment(request));
+    }
+
+    @GetMapping("/vn-pay-callback")
+    public ApiResponse<PaymentVnPayResponse> payCallbackHandler(HttpServletRequest request) {
+        String status = request.getParameter("vnp_ResponseCode");
+        if (status.equals("00")) {
+            return ApiResponse.ok(new PaymentVnPayResponse("00", "Success", ""));
+        } else {
+            return ApiResponse.fail("Failed", Integer.parseInt(status));
+        }
+    }
+>>>>>>> upstream/develop
 }

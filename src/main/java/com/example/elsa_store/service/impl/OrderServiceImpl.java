@@ -23,15 +23,27 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerRepository customerRepository;
     private final AddressRepository addressRepository;
     private final ProductVariantRepository productVariantRepository;
+<<<<<<< HEAD
+=======
+    private final UserRepository userRepository;
+>>>>>>> upstream/develop
 
     public OrderServiceImpl(OrderRepository orderRepository,
                             CustomerRepository customerRepository,
                             AddressRepository addressRepository,
+<<<<<<< HEAD
                             ProductVariantRepository productVariantRepository) {
+=======
+                            ProductVariantRepository productVariantRepository, UserRepository userRepository) {
+>>>>>>> upstream/develop
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.addressRepository = addressRepository;
         this.productVariantRepository = productVariantRepository;
+<<<<<<< HEAD
+=======
+        this.userRepository = userRepository;
+>>>>>>> upstream/develop
     }
 
     @Override
@@ -42,6 +54,15 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(OrderStatus.NEW.ordinal());
 
+<<<<<<< HEAD
+=======
+        if (request.getUserId() != null) {
+            User user = userRepository.findById(request.getUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+            order.setUser(user);
+        }
+
+>>>>>>> upstream/develop
         if (request.getCustomerId() != null) {
             Customer customer = customerRepository.findById(request.getCustomerId())
                     .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
@@ -96,6 +117,16 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public List<OrderResponse> getAllByUser(Long userId) {
+        return orderRepository.findAllByUser_Id(userId).stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+>>>>>>> upstream/develop
 
     @Override
     public void delete(Long id) {
@@ -120,6 +151,10 @@ public class OrderServiceImpl implements OrderService {
                 OrderResponse.OrderItemResponse ir = new OrderResponse.OrderItemResponse();
                 ir.setProductVariantId(item.getProductVariant().getId());
                 ir.setProductName(item.getProductVariant().getProduct().getName());
+<<<<<<< HEAD
+=======
+                ir.setPathImage(item.getProductVariant().getImageUrl());
+>>>>>>> upstream/develop
                 ir.setQuantity(item.getQuantity());
                 ir.setUnitPrice(item.getUnitPrice());
                 ir.setLineTotal(item.getLineTotal());

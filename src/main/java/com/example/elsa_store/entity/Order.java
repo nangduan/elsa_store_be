@@ -29,7 +29,11 @@ public class Order extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "created_by")
+<<<<<<< HEAD
     private User createdBy;
+=======
+    private User user;
+>>>>>>> upstream/develop
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;

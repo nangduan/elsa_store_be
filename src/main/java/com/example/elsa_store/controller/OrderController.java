@@ -35,6 +35,14 @@ public class OrderController {
         return ApiResponse.ok(orderService.getAll());
     }
 
+<<<<<<< HEAD
+=======
+    @GetMapping("/by-user/{userId}")
+    public ApiResponse<List<OrderResponse>> getAllByUserId(@PathVariable Long userId) {
+        return ApiResponse.ok(orderService.getAllByUser(userId));
+    }
+
+>>>>>>> upstream/develop
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         orderService.delete(id);
