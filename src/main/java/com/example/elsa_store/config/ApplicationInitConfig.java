@@ -1,22 +1,19 @@
 package com.example.elsa_store.config;
 
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.elsa_store.entity.User;
-<<<<<<< HEAD
-import com.example.elsa_store.entity.enums.Role;
-=======
 import com.example.elsa_store.constant.Role;
->>>>>>> upstream/develop
+import com.example.elsa_store.entity.User;
 import com.example.elsa_store.repository.UserRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor

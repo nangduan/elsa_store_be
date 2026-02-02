@@ -1,9 +1,10 @@
-
 package com.example.elsa_store.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.*;
+
+import lombok.*;
 
 @MappedSuperclass
 @Getter

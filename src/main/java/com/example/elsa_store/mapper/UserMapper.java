@@ -1,10 +1,8 @@
-
 package com.example.elsa_store.mapper;
 
 import com.example.elsa_store.dto.request.UserRequest;
 import com.example.elsa_store.dto.response.UserResponse;
 import com.example.elsa_store.entity.User;
-import org.mapstruct.Mapper;
 
 public class UserMapper {
 

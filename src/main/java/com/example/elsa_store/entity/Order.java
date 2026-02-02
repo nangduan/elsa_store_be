@@ -1,11 +1,11 @@
-
 package com.example.elsa_store.entity;
-
-import jakarta.persistence.*;
-import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.persistence.*;
+
+import lombok.*;
 
 @Entity
 @Table(name = "orders")
@@ -29,11 +29,7 @@ public class Order extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "created_by")
-<<<<<<< HEAD
-    private User createdBy;
-=======
     private User user;
->>>>>>> upstream/develop
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;

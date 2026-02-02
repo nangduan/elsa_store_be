@@ -1,5 +1,8 @@
 package com.example.elsa_store.service.impl;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.dto.request.AddToCartRequest;
 import com.example.elsa_store.dto.request.UpdateCartItemRequest;
@@ -8,9 +11,8 @@ import com.example.elsa_store.dto.response.CartResponse;
 import com.example.elsa_store.entity.*;
 import com.example.elsa_store.repository.*;
 import com.example.elsa_store.service.CartService;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +38,8 @@ public class CartServiceImpl implements CartService {
 
         Cart cart = getOrCreateCart(customerId);
 
-        ProductVariant variant = productVariantRepository.findById(req.getProductVariantId())
+        ProductVariant variant = productVariantRepository
+                .findById(req.getProductVariantId())
                 .orElseThrow(() -> new IllegalArgumentException("ProductVariant không tồn tại"));
 
         CartItem item = cartItemRepository
@@ -78,7 +81,8 @@ public class CartServiceImpl implements CartService {
 
         Cart cart = getOrCreateCart(customerId);
 
-        CartItem item = cartItemRepository.findById(cartItemId)
+        CartItem item = cartItemRepository
+                .findById(cartItemId)
                 .orElseThrow(() -> new IllegalArgumentException("CartItem không tồn tại"));
 
         // bảo vệ: item có thuộc cart của user không?
@@ -103,7 +107,8 @@ public class CartServiceImpl implements CartService {
     public ApiResponse<CartResponse> removeItem(Long customerId, Long cartItemId) {
         Cart cart = getOrCreateCart(customerId);
 
-        CartItem item = cartItemRepository.findById(cartItemId)
+        CartItem item = cartItemRepository
+                .findById(cartItemId)
                 .orElseThrow(() -> new IllegalArgumentException("CartItem không tồn tại"));
 
         if (!item.getCart().getId().equals(cart.getId())) {
@@ -130,17 +135,13 @@ public class CartServiceImpl implements CartService {
     }
 
     private Cart getOrCreateCart(Long userId) {
-        return cartRepository.findByUserId(userId)
-                .orElseGet(() -> {
-                    User user = userRepository.findById(userId).orElseThrow();
+        return cartRepository.findByUserId(userId).orElseGet(() -> {
+            User user = userRepository.findById(userId).orElseThrow();
 
-                    Cart cart = Cart.builder()
-                            .user(user)
-                            .totalAmount(0.0)
-                            .build();
+            Cart cart = Cart.builder().user(user).totalAmount(0.0).build();
 
-                    return cartRepository.save(cart);
-                });
+            return cartRepository.save(cart);
+        });
     }
 
     private void recalculateCart(Cart cart) {
@@ -163,14 +164,13 @@ public class CartServiceImpl implements CartService {
                 .items(cart.getItems().stream().map(this::toItemResponse).toList())
                 .totalAmount(cart.getTotalAmount() == null ? 0.0 : cart.getTotalAmount())
                 .build();
-        return ApiResponse.<CartResponse>builder()
-                .data(cartResponse)
-                .build();
+        return ApiResponse.<CartResponse>builder().data(cartResponse).build();
     }
 
     private CartItemResponse toItemResponse(CartItem item) {
         ProductVariant v = item.getProductVariant();
-        String productName = (v != null && v.getProduct() != null) ? v.getProduct().getName() : null;
+        String productName =
+                (v != null && v.getProduct() != null) ? v.getProduct().getName() : null;
 
         return CartItemResponse.builder()
                 .id(item.getId())

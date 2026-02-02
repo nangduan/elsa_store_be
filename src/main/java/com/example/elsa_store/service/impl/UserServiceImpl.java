@@ -1,5 +1,10 @@
-
 package com.example.elsa_store.service.impl;
+
+import java.util.List;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.elsa_store.dto.request.UserRequest;
 import com.example.elsa_store.dto.response.UserResponse;
@@ -8,12 +13,8 @@ import com.example.elsa_store.exception.ResourceNotFoundException;
 import com.example.elsa_store.mapper.UserMapper;
 import com.example.elsa_store.repository.UserRepository;
 import com.example.elsa_store.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
@@ -22,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
 
     @Override
     public UserResponse create(UserRequest req) {
@@ -38,8 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse update(Long id, UserRequest req) {
-        User u = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         UserMapper.update(u, req);
         return UserMapper.toResponse(u);
     }
@@ -55,16 +54,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserResponse getById(Long id) {
-        User u = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        User u = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return UserMapper.toResponse(u);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<UserResponse> getAll() {
-        return userRepository.findAll().stream()
-                .map(UserMapper::toResponse)
-                .toList();
+        return userRepository.findAll().stream().map(UserMapper::toResponse).toList();
     }
 }

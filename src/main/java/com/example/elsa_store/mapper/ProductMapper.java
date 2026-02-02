@@ -1,4 +1,3 @@
-
 package com.example.elsa_store.mapper;
 
 import com.example.elsa_store.dto.request.ProductRequest;
@@ -35,7 +34,8 @@ public class ProductMapper {
         res.setName(product.getName());
         res.setDescription(product.getDescription());
         res.setBasePrice(product.getBasePrice());
-        res.setCategoryName(product.getCategory() != null ? product.getCategory().getName() : null);
+        res.setCategoryName(
+                product.getCategory() != null ? product.getCategory().getName() : null);
         return res;
     }
 
@@ -47,7 +47,8 @@ public class ProductMapper {
         res.setName(product.getName());
         res.setDescription(product.getDescription());
         res.setBasePrice(product.getBasePrice());
-        res.setCategoryName(product.getCategory() != null ? product.getCategory().getName() : null);
+        res.setCategoryName(
+                product.getCategory() != null ? product.getCategory().getName() : null);
         return res;
     }
 }

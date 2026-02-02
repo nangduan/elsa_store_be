@@ -1,10 +1,9 @@
-
 package com.example.elsa_store.repository;
 
-import com.example.elsa_store.entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.elsa_store.entity.Address;
+
 @Repository
-public interface AddressRepository extends JpaRepository<Address, Long> {
-}
+public interface AddressRepository extends JpaRepository<Address, Long> {}

@@ -1,10 +1,8 @@
-
 package com.example.elsa_store.entity;
 
 import jakarta.persistence.*;
+
 import lombok.*;
-
-
 
 @Entity
 @Table(name = "purchase_order_items")

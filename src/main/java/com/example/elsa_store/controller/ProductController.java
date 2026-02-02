@@ -1,17 +1,18 @@
-
 package com.example.elsa_store.controller;
 
-import com.example.elsa_store.dto.request.ProductRequest;
-import com.example.elsa_store.dto.response.ProductDetailResponse;
-import com.example.elsa_store.dto.response.ProductResponse;
-import com.example.elsa_store.service.ProductService;
+import java.util.List;
+
 import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.example.elsa_store.dto.common.ApiResponse;
+import com.example.elsa_store.dto.request.ProductRequest;
+import com.example.elsa_store.dto.response.ProductDetailResponse;
+import com.example.elsa_store.dto.response.ProductResponse;
+import com.example.elsa_store.service.ProductService;
 
 @RestController
 @RequestMapping("/products")
@@ -29,8 +30,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<ProductResponse> update(@PathVariable Long id,
-                                                  @Valid @RequestBody ProductRequest request) {
+    public ApiResponse<ProductResponse> update(@PathVariable Long id, @Valid @RequestBody ProductRequest request) {
         return ApiResponse.ok(productService.update(id, request));
     }
 
@@ -52,9 +52,7 @@ public class ProductController {
 
     @PostMapping(value = "/{id}/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<List<String>> uploadImages(
-            @PathVariable Long id,
-            @RequestPart("files") List<MultipartFile> files
-    ) {
+            @PathVariable Long id, @RequestPart("files") List<MultipartFile> files) {
         return ApiResponse.ok(productService.uploadImages(id, files));
     }
 }

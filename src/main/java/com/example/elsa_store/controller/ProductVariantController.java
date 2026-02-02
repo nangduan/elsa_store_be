@@ -1,17 +1,18 @@
-
 package com.example.elsa_store.controller;
 
-import com.example.elsa_store.dto.request.ProductVariantRequest;
-import com.example.elsa_store.dto.response.ProductVariantDetailResponse;
-import com.example.elsa_store.dto.response.ProductVariantResponse;
-import com.example.elsa_store.service.ProductVariantService;
+import java.util.List;
+
 import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.example.elsa_store.dto.common.ApiResponse;
+import com.example.elsa_store.dto.request.ProductVariantRequest;
+import com.example.elsa_store.dto.response.ProductVariantDetailResponse;
+import com.example.elsa_store.dto.response.ProductVariantResponse;
+import com.example.elsa_store.service.ProductVariantService;
 
 @RestController
 @RequestMapping("/product-variants")
@@ -29,8 +30,8 @@ public class ProductVariantController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<ProductVariantResponse> update(@PathVariable Long id,
-                                                         @Valid @RequestBody ProductVariantRequest req) {
+    public ApiResponse<ProductVariantResponse> update(
+            @PathVariable Long id, @Valid @RequestBody ProductVariantRequest req) {
         return ApiResponse.ok(productVariantService.update(id, req));
     }
 
@@ -52,9 +53,7 @@ public class ProductVariantController {
 
     @PostMapping(value = "/{id}/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<List<String>> uploadImages(
-            @PathVariable Long id,
-            @RequestPart("files") List<MultipartFile> files
-    ) {
+            @PathVariable Long id, @RequestPart("files") List<MultipartFile> files) {
         return ApiResponse.ok(productVariantService.uploadImages(id, files));
     }
 }

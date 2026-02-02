@@ -1,14 +1,15 @@
-
 package com.example.elsa_store.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.dto.request.CategoryRequest;
 import com.example.elsa_store.dto.response.CategoryResponse;
 import com.example.elsa_store.service.CategoryService;
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
@@ -26,8 +27,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<CategoryResponse> update(@PathVariable Long id,
-                                                   @Valid @RequestBody CategoryRequest req) {
+    public ApiResponse<CategoryResponse> update(@PathVariable Long id, @Valid @RequestBody CategoryRequest req) {
         return ApiResponse.ok(categoryService.update(id, req));
     }
 

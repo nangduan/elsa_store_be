@@ -1,29 +1,12 @@
 package com.example.elsa_store.service.impl;
 
-import com.example.elsa_store.exception.AppException;
-import com.example.elsa_store.exception.ErrorCode;
-import com.example.elsa_store.mapper.UserMapper;
-import com.example.elsa_store.service.AuthenticationService;
-import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jwt.JWTClaimsSet;
-import com.nimbusds.jwt.SignedJWT;
-import com.example.elsa_store.dto.request.AuthenticationRequest;
-import com.example.elsa_store.dto.request.IntrospectRequest;
-import com.example.elsa_store.dto.request.RefreshTokenRequest;
-import com.example.elsa_store.dto.response.AuthenticationResponse;
-import com.example.elsa_store.dto.response.IntrospectResponse;
-import com.example.elsa_store.entity.*;
-<<<<<<< HEAD
-import com.example.elsa_store.entity.enums.Role;
-=======
->>>>>>> upstream/develop
-import com.example.elsa_store.repository.*;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
+import java.text.ParseException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.StringJoiner;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,12 +18,27 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.StringJoiner;
-import java.util.UUID;
+import com.example.elsa_store.dto.request.AuthenticationRequest;
+import com.example.elsa_store.dto.request.IntrospectRequest;
+import com.example.elsa_store.dto.request.RefreshTokenRequest;
+import com.example.elsa_store.dto.response.AuthenticationResponse;
+import com.example.elsa_store.dto.response.IntrospectResponse;
+import com.example.elsa_store.entity.*;
+import com.example.elsa_store.exception.AppException;
+import com.example.elsa_store.exception.ErrorCode;
+import com.example.elsa_store.mapper.UserMapper;
+import com.example.elsa_store.repository.*;
+import com.example.elsa_store.service.AuthenticationService;
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
 @Service
 @RequiredArgsConstructor
@@ -61,6 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @NonFinal
     @Value("${jwt.signer-key}")
     protected String SIGNER_KEY;
+
     @Override
     public IntrospectResponse introspect(IntrospectRequest request) throws ParseException, JOSEException {
         var token = request.getToken();
@@ -86,8 +85,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!authenticated) throw new AppException(ErrorCode.INCORRECT_ACCOUNT_OR_PASSWORD);
 
         String jit = UUID.randomUUID().toString();
-        var accessToken  = generateToken(user, "ACCESS", jit);
-        var refreshToken  = generateToken(user, "REFRESH", jit);
+        var accessToken = generateToken(user, "ACCESS", jit);
+        var refreshToken = generateToken(user, "REFRESH", jit);
 
         AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
                 .accessToken(accessToken)
@@ -102,7 +101,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponse refreshToken(RefreshTokenRequest request)throws ParseException, JOSEException {
+    public AuthenticationResponse refreshToken(RefreshTokenRequest request) throws ParseException, JOSEException {
         SignedJWT signJWT = verifyToken(request.getToken());
 
         var claims = signJWT.getJWTClaimsSet();
@@ -123,8 +122,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.UN_AUTHENTICATED));
 
         String jitNew = UUID.randomUUID().toString();
-        var accessToken  = generateToken(user, "ACCESS", jitNew);
-        var refreshToken  = generateToken(user, "REFRESH", jitNew);
+        var accessToken = generateToken(user, "ACCESS", jitNew);
+        var refreshToken = generateToken(user, "REFRESH", jitNew);
 
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
@@ -134,7 +133,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void logout()throws ParseException, JOSEException {
+    public void logout() throws ParseException, JOSEException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(authentication instanceof JwtAuthenticationToken jwtAuth)) {
@@ -144,10 +143,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Jwt jwt = jwtAuth.getToken();
         String tokenValue = jwt.getTokenValue();
 
-        SignedJWT  signedJWT  = verifyToken(tokenValue);
+        SignedJWT signedJWT = verifyToken(tokenValue);
 
-        String jti = signedJWT .getJWTClaimsSet().getJWTID();
-        Date expiryTime = signedJWT .getJWTClaimsSet().getExpirationTime();
+        String jti = signedJWT.getJWTClaimsSet().getJWTID();
+        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         InvalidatedToken invalidatedToken =
                 InvalidatedToken.builder().id(jti).expiryTime(expiryTime).build();
@@ -164,7 +163,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
-
         if (expiryTime.before(new Date())) throw new AppException(ErrorCode.UN_AUTHENTICATED);
 
         if (invalidatedRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
@@ -173,9 +171,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private String generateToken(User user, String tokenType, String jit) {
-        long duration = tokenType.equals("ACCESS")
-                ? VALID_DURATION
-                : REFRESHABLE_DURATION;
+        long duration = tokenType.equals("ACCESS") ? VALID_DURATION : REFRESHABLE_DURATION;
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getUsername())
                 .issuer("vanmo.com") // domain
@@ -186,7 +182,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .claim("scope", buildScope(user))
                 .claim("token_type", tokenType)
                 .build();
-
 
         try {
             JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);

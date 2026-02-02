@@ -1,5 +1,9 @@
-
 package com.example.elsa_store.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.elsa_store.dto.request.PromotionRequest;
 import com.example.elsa_store.dto.response.PromotionResponse;
@@ -8,10 +12,6 @@ import com.example.elsa_store.exception.ResourceNotFoundException;
 import com.example.elsa_store.mapper.PromotionMapper;
 import com.example.elsa_store.repository.PromotionRepository;
 import com.example.elsa_store.service.PromotionService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -32,7 +32,8 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public PromotionResponse update(Long id, PromotionRequest req) {
-        Promotion p = promotionRepository.findById(id)
+        Promotion p = promotionRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Promotion not found"));
         PromotionMapper.update(p, req);
         return PromotionMapper.toResponse(p);
@@ -49,7 +50,8 @@ public class PromotionServiceImpl implements PromotionService {
     @Override
     @Transactional(readOnly = true)
     public PromotionResponse getById(Long id) {
-        Promotion p = promotionRepository.findById(id)
+        Promotion p = promotionRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Promotion not found"));
         return PromotionMapper.toResponse(p);
     }

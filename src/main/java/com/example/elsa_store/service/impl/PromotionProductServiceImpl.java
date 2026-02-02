@@ -1,8 +1,9 @@
 package com.example.elsa_store.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.example.elsa_store.dto.request.PromotionProductRequest;
 import com.example.elsa_store.dto.response.PromotionProductResponse;
-import com.example.elsa_store.dto.response.PromotionResponse;
 import com.example.elsa_store.entity.Product;
 import com.example.elsa_store.entity.Promotion;
 import com.example.elsa_store.entity.PromotionProduct;
@@ -13,9 +14,8 @@ import com.example.elsa_store.repository.ProductRepository;
 import com.example.elsa_store.repository.PromotionProductRepository;
 import com.example.elsa_store.repository.PromotionRepository;
 import com.example.elsa_store.service.PromotionProductService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +27,12 @@ public class PromotionProductServiceImpl implements PromotionProductService {
 
     @Override
     public PromotionProductResponse create(PromotionProductRequest req) {
-        Product product = productRepository.findById(req.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-        Promotion promotion = promotionRepository.findById(req.getPromotionId()).orElseThrow(() -> new ResourceNotFoundException("Promotion not found"));
+        Product product = productRepository
+                .findById(req.getProductId())
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Promotion promotion = promotionRepository
+                .findById(req.getPromotionId())
+                .orElseThrow(() -> new ResourceNotFoundException("Promotion not found"));
 
         PromotionProduct promotionProduct = new PromotionProduct();
         promotionProduct.setProduct(product);

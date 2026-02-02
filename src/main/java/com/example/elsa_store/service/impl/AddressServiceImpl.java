@@ -1,5 +1,9 @@
-
 package com.example.elsa_store.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.elsa_store.dto.request.AddressRequest;
 import com.example.elsa_store.dto.response.AddressResponse;
@@ -10,10 +14,6 @@ import com.example.elsa_store.mapper.AddressMapper;
 import com.example.elsa_store.repository.AddressRepository;
 import com.example.elsa_store.repository.CustomerRepository;
 import com.example.elsa_store.service.AddressService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -22,15 +22,15 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final CustomerRepository customerRepository;
 
-    public AddressServiceImpl(AddressRepository addressRepository,
-                              CustomerRepository customerRepository) {
+    public AddressServiceImpl(AddressRepository addressRepository, CustomerRepository customerRepository) {
         this.addressRepository = addressRepository;
         this.customerRepository = customerRepository;
     }
 
     @Override
     public AddressResponse create(AddressRequest req) {
-        Customer customer = customerRepository.findById(req.getCustomerId())
+        Customer customer = customerRepository
+                .findById(req.getCustomerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         Address a = AddressMapper.toEntity(req, customer);
         a = addressRepository.save(a);
@@ -39,9 +39,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressResponse update(Long id, AddressRequest req) {
-        Address a = addressRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
-        Customer customer = customerRepository.findById(req.getCustomerId())
+        Address a =
+                addressRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+        Customer customer = customerRepository
+                .findById(req.getCustomerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         AddressMapper.update(a, req, customer);
         return AddressMapper.toResponse(a);
@@ -58,8 +59,8 @@ public class AddressServiceImpl implements AddressService {
     @Override
     @Transactional(readOnly = true)
     public AddressResponse getById(Long id) {
-        Address a = addressRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
+        Address a =
+                addressRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Address not found"));
         return AddressMapper.toResponse(a);
     }
 

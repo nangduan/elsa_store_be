@@ -1,10 +1,10 @@
-
 package com.example.elsa_store.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.List;
+
+import jakarta.persistence.*;
+
+import lombok.*;
 
 @Entity
 @Table(name = "product_variants")

@@ -1,4 +1,3 @@
-
 package com.example.elsa_store.dto.response;
 
 public class CategoryResponse {
@@ -8,19 +7,35 @@ public class CategoryResponse {
     private Long parentId;
     private String parentName;
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public Long getParentId() { return parentId; }
+    public Long getParentId() {
+        return parentId;
+    }
 
-    public void setParentId(Long parentId) { this.parentId = parentId; }
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
-    public String getParentName() { return parentName; }
+    public String getParentName() {
+        return parentName;
+    }
 
-    public void setParentName(String parentName) { this.parentName = parentName; }
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
 }

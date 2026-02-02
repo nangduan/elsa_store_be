@@ -1,17 +1,18 @@
-
 package com.example.elsa_store.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.dto.request.PromotionProductRequest;
 import com.example.elsa_store.dto.response.PromotionProductResponse;
 import com.example.elsa_store.entity.PromotionProduct;
 import com.example.elsa_store.exception.ResourceNotFoundException;
 import com.example.elsa_store.repository.PromotionProductRepository;
 import com.example.elsa_store.service.PromotionProductService;
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/promotion-products")
@@ -20,7 +21,8 @@ public class PromotionProductController {
     private final PromotionProductRepository promotionProductRepository;
     private final PromotionProductService promotionProductService;
 
-    public PromotionProductController(PromotionProductRepository promotionProductRepository, PromotionProductService promotionProductService) {
+    public PromotionProductController(
+            PromotionProductRepository promotionProductRepository, PromotionProductService promotionProductService) {
         this.promotionProductRepository = promotionProductRepository;
         this.promotionProductService = promotionProductService;
     }
@@ -32,7 +34,8 @@ public class PromotionProductController {
 
     @GetMapping("/{id}")
     public ApiResponse<PromotionProduct> getById(@PathVariable Long id) {
-        PromotionProduct item = promotionProductRepository.findById(id)
+        PromotionProduct item = promotionProductRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("PromotionProduct not found"));
         return ApiResponse.ok(item);
     }
@@ -43,9 +46,9 @@ public class PromotionProductController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<PromotionProduct> update(@PathVariable Long id,
-                                           @Valid @RequestBody PromotionProduct body) {
-        PromotionProduct existing = promotionProductRepository.findById(id)
+    public ApiResponse<PromotionProduct> update(@PathVariable Long id, @Valid @RequestBody PromotionProduct body) {
+        PromotionProduct existing = promotionProductRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("PromotionProduct not found"));
         body.setId(existing.getId());
         return ApiResponse.ok(promotionProductRepository.save(body));

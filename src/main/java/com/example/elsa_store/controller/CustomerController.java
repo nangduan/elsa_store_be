@@ -1,14 +1,15 @@
-
 package com.example.elsa_store.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.dto.request.CustomerRequest;
 import com.example.elsa_store.dto.response.CustomerResponse;
 import com.example.elsa_store.service.CustomerService;
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
@@ -26,8 +27,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<CustomerResponse> update(@PathVariable Long id,
-                                                   @Valid @RequestBody CustomerRequest req) {
+    public ApiResponse<CustomerResponse> update(@PathVariable Long id, @Valid @RequestBody CustomerRequest req) {
         return ApiResponse.ok(customerService.update(id, req));
     }
 

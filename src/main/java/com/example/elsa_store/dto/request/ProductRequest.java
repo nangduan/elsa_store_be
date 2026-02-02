@@ -1,4 +1,3 @@
-
 package com.example.elsa_store.dto.request;
 
 import jakarta.validation.constraints.Min;
@@ -18,19 +17,35 @@ public class ProductRequest {
 
     private Long categoryId;
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public Double getBasePrice() { return basePrice; }
+    public Double getBasePrice() {
+        return basePrice;
+    }
 
-    public void setBasePrice(Double basePrice) { this.basePrice = basePrice; }
+    public void setBasePrice(Double basePrice) {
+        this.basePrice = basePrice;
+    }
 
-    public Long getCategoryId() { return categoryId; }
+    public Long getCategoryId() {
+        return categoryId;
+    }
 
-    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
 }

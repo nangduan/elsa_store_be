@@ -1,9 +1,10 @@
 package com.example.elsa_store.repository;
 
-import com.example.elsa_store.entity.CartItem;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import com.example.elsa_store.entity.CartItem;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     Optional<CartItem> findByCartIdAndProductVariantId(Long cartId, Long productVariantId);

@@ -1,10 +1,11 @@
 package com.example.elsa_store.dto.response;
 
-import com.example.elsa_store.constant.RevenueGroupBy;
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.example.elsa_store.constant.RevenueGroupBy;
+
+import lombok.*;
 
 @Getter
 @Setter

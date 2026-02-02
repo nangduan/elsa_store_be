@@ -1,5 +1,10 @@
-
 package com.example.elsa_store.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.elsa_store.dto.request.ProductRequest;
 import com.example.elsa_store.dto.response.ProductDetailResponse;
@@ -8,7 +13,6 @@ import com.example.elsa_store.dto.response.ProductVariantResponse;
 import com.example.elsa_store.entity.Category;
 import com.example.elsa_store.entity.Product;
 import com.example.elsa_store.entity.ProductImage;
-import com.example.elsa_store.entity.ProductVariant;
 import com.example.elsa_store.exception.ResourceNotFoundException;
 import com.example.elsa_store.mapper.ProductMapper;
 import com.example.elsa_store.mapper.ProductVariantMapper;
@@ -18,12 +22,6 @@ import com.example.elsa_store.repository.ProductRepository;
 import com.example.elsa_store.repository.ProductVariantRepository;
 import com.example.elsa_store.service.FileStorageService;
 import com.example.elsa_store.service.ProductService;
-import org.hibernate.procedure.ProcedureOutputs;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -35,8 +33,12 @@ public class ProductServiceImpl implements ProductService {
     private final ProductImageRepository productImageRepository;
     private final ProductVariantRepository productVariantRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository,
-                              CategoryRepository categoryRepository, FileStorageService fileStorageService, ProductImageRepository productImageRepository, ProductVariantRepository productVariantRepository) {
+    public ProductServiceImpl(
+            ProductRepository productRepository,
+            CategoryRepository categoryRepository,
+            FileStorageService fileStorageService,
+            ProductImageRepository productImageRepository,
+            ProductVariantRepository productVariantRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.fileStorageService = fileStorageService;
@@ -48,7 +50,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse create(ProductRequest request) {
         Category category = null;
         if (request.getCategoryId() != null) {
-            category = categoryRepository.findById(request.getCategoryId())
+            category = categoryRepository
+                    .findById(request.getCategoryId())
                     .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
         }
         Product product = ProductMapper.toEntity(request, category);
@@ -58,11 +61,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse update(Long id, ProductRequest request) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Product product =
+                productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         Category category = null;
         if (request.getCategoryId() != null) {
-            category = categoryRepository.findById(request.getCategoryId())
+            category = categoryRepository
+                    .findById(request.getCategoryId())
                     .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
         }
         ProductMapper.updateEntity(product, request, category);
@@ -80,13 +84,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public ProductDetailResponse getById(Long id) {
-        List<ProductVariantResponse> productVariants = productVariantRepository.findAllByProduct_Id(id).stream().map(
-                ProductVariantMapper::toResponse
-        ).toList();
-        List<String> productImages = productImageRepository.findAllByProduct_Id(id).stream().map(ProductImage::getImageUrl).toList();
+        List<ProductVariantResponse> productVariants = productVariantRepository.findAllByProduct_Id(id).stream()
+                .map(ProductVariantMapper::toResponse)
+                .toList();
+        List<String> productImages = productImageRepository.findAllByProduct_Id(id).stream()
+                .map(ProductImage::getImageUrl)
+                .toList();
 
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Product product =
+                productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         ProductDetailResponse productDetailResponse = ProductMapper.toDetailResponse(product);
         productDetailResponse.setProductVariants(productVariants);
@@ -97,17 +103,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<String> uploadImages(Long productId, List<MultipartFile> files) {
-        Product product = productRepository.findById(productId)
+        Product product = productRepository
+                .findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id=" + productId));
 
-        List<String> urls = files.stream().map(fileStorageService::uploadHotelImage).toList();
+        List<String> urls =
+                files.stream().map(fileStorageService::uploadHotelImage).toList();
 
-        List<ProductImage> images = urls.stream().map(url ->
-                ProductImage.builder()
-                        .imageUrl(url)
-                        .product(product)
-                        .build()
-        ).toList();
+        List<ProductImage> images = urls.stream()
+                .map(url ->
+                        ProductImage.builder().imageUrl(url).product(product).build())
+                .toList();
 
         productImageRepository.saveAll(images);
 

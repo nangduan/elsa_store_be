@@ -9,11 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/elsa_store_db
     username: root
-<<<<<<< HEAD
     password: 123456
-=======
-    password: 03092003
->>>>>>> upstream/develop
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,9 +20,6 @@ jwt:
   refreshable-duration: 604800 # 7 ngày
 
 file:
-<<<<<<< HEAD
-  upload-dir: uploads/
-=======
   upload-dir: uploads/
 
 vnpay:
@@ -37,4 +30,3 @@ vnpay:
   version : "2.1.0"
   command : "pay"
   orderType : "other"
->>>>>>> upstream/develop

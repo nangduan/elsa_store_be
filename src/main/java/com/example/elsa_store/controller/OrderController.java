@@ -1,14 +1,15 @@
-
 package com.example.elsa_store.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.dto.request.OrderRequest;
 import com.example.elsa_store.dto.response.OrderResponse;
 import com.example.elsa_store.service.OrderService;
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -35,14 +36,11 @@ public class OrderController {
         return ApiResponse.ok(orderService.getAll());
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("/by-user/{userId}")
     public ApiResponse<List<OrderResponse>> getAllByUserId(@PathVariable Long userId) {
         return ApiResponse.ok(orderService.getAllByUser(userId));
     }
 
->>>>>>> upstream/develop
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         orderService.delete(id);

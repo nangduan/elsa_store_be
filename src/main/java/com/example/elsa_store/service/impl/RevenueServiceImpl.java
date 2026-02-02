@@ -1,20 +1,20 @@
 package com.example.elsa_store.service.impl;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.elsa_store.constant.OrderStatus;
 import com.example.elsa_store.constant.RevenueGroupBy;
 import com.example.elsa_store.dto.response.*;
 import com.example.elsa_store.repository.OrderItemRepository;
 import com.example.elsa_store.repository.OrderRepository;
 import com.example.elsa_store.service.RevenueService;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -39,7 +39,8 @@ public class RevenueServiceImpl implements RevenueService {
     public RevenueSummaryResponse getSummary(LocalDate from, LocalDate to, List<Integer> statuses) {
         statuses = normalizeStatuses(statuses);
 
-        Object[] row = orderRepository.revenueSummary(from.atStartOfDay(), to.plusDays(1).atStartOfDay(), statuses);
+        Object[] row = orderRepository.revenueSummary(
+                from.atStartOfDay(), to.plusDays(1).atStartOfDay(), statuses);
         if (row != null && row.length == 1 && row[0] instanceof Object[]) {
             row = (Object[]) row[0];
         }
@@ -62,7 +63,8 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public RevenueTimeSeriesResponse getTimeSeries(LocalDateTime from, LocalDateTime to, RevenueGroupBy groupBy, List<Integer> statuses) {
+    public RevenueTimeSeriesResponse getTimeSeries(
+            LocalDateTime from, LocalDateTime to, RevenueGroupBy groupBy, List<Integer> statuses) {
         statuses = normalizeStatuses(statuses);
         if (groupBy == null) groupBy = RevenueGroupBy.DAY;
 
@@ -112,7 +114,8 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public List<ProductRevenueResponse> getTopProducts(LocalDateTime from, LocalDateTime to, List<Integer> statuses, int limit) {
+    public List<ProductRevenueResponse> getTopProducts(
+            LocalDateTime from, LocalDateTime to, List<Integer> statuses, int limit) {
         statuses = normalizeStatuses(statuses);
         if (limit <= 0) limit = 10;
 
@@ -134,8 +137,8 @@ public class RevenueServiceImpl implements RevenueService {
     private String toDayString(Object raw) {
         if (raw == null) return null;
         if (raw instanceof Date d) return d.toLocalDate().toString();
-        if (raw instanceof java.time.LocalDate ld) return ld.toString();
-        if (raw instanceof java.time.LocalDateTime ldt) return ldt.toLocalDate().toString();
+        if (raw instanceof LocalDate ld) return ld.toString();
+        if (raw instanceof LocalDateTime ldt) return ldt.toLocalDate().toString();
         return String.valueOf(raw);
     }
 }

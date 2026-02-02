@@ -1,5 +1,9 @@
-
 package com.example.elsa_store.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.elsa_store.dto.request.CustomerRequest;
 import com.example.elsa_store.dto.response.CustomerResponse;
@@ -10,10 +14,6 @@ import com.example.elsa_store.mapper.CustomerMapper;
 import com.example.elsa_store.repository.CustomerRepository;
 import com.example.elsa_store.repository.UserRepository;
 import com.example.elsa_store.service.CustomerService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -22,15 +22,15 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository,
-                               UserRepository userRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, UserRepository userRepository) {
         this.customerRepository = customerRepository;
         this.userRepository = userRepository;
     }
 
     @Override
     public CustomerResponse create(CustomerRequest req) {
-        User user = userRepository.findById(req.getUserId())
+        User user = userRepository
+                .findById(req.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         Customer c = CustomerMapper.toEntity(req, user);
         c = customerRepository.save(c);
@@ -39,9 +39,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponse update(Long id, CustomerRequest req) {
-        Customer c = customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
-        User user = userRepository.findById(req.getUserId())
+        Customer c =
+                customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+        User user = userRepository
+                .findById(req.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         CustomerMapper.update(c, req, user);
         return CustomerMapper.toResponse(c);
@@ -58,8 +59,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional(readOnly = true)
     public CustomerResponse getById(Long id) {
-        Customer c = customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
+        Customer c =
+                customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         return CustomerMapper.toResponse(c);
     }
 

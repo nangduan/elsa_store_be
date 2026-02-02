@@ -1,5 +1,11 @@
-
 package com.example.elsa_store.service.impl;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.elsa_store.constant.OrderStatus;
 import com.example.elsa_store.dto.request.OrderRequest;
@@ -8,12 +14,6 @@ import com.example.elsa_store.entity.*;
 import com.example.elsa_store.exception.ResourceNotFoundException;
 import com.example.elsa_store.repository.*;
 import com.example.elsa_store.service.OrderService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional
@@ -23,27 +23,19 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerRepository customerRepository;
     private final AddressRepository addressRepository;
     private final ProductVariantRepository productVariantRepository;
-<<<<<<< HEAD
-=======
     private final UserRepository userRepository;
->>>>>>> upstream/develop
 
-    public OrderServiceImpl(OrderRepository orderRepository,
-                            CustomerRepository customerRepository,
-                            AddressRepository addressRepository,
-<<<<<<< HEAD
-                            ProductVariantRepository productVariantRepository) {
-=======
-                            ProductVariantRepository productVariantRepository, UserRepository userRepository) {
->>>>>>> upstream/develop
+    public OrderServiceImpl(
+            OrderRepository orderRepository,
+            CustomerRepository customerRepository,
+            AddressRepository addressRepository,
+            ProductVariantRepository productVariantRepository,
+            UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.addressRepository = addressRepository;
         this.productVariantRepository = productVariantRepository;
-<<<<<<< HEAD
-=======
         this.userRepository = userRepository;
->>>>>>> upstream/develop
     }
 
     @Override
@@ -54,23 +46,23 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(OrderStatus.NEW.ordinal());
 
-<<<<<<< HEAD
-=======
         if (request.getUserId() != null) {
-            User user = userRepository.findById(request.getUserId())
+            User user = userRepository
+                    .findById(request.getUserId())
                     .orElseThrow(() -> new ResourceNotFoundException("User not found"));
             order.setUser(user);
         }
 
->>>>>>> upstream/develop
         if (request.getCustomerId() != null) {
-            Customer customer = customerRepository.findById(request.getCustomerId())
+            Customer customer = customerRepository
+                    .findById(request.getCustomerId())
                     .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
             order.setCustomer(customer);
         }
 
         if (request.getAddressId() != null) {
-            Address address = addressRepository.findById(request.getAddressId())
+            Address address = addressRepository
+                    .findById(request.getAddressId())
                     .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
             order.setAddress(address);
         }
@@ -79,7 +71,8 @@ public class OrderServiceImpl implements OrderService {
         Double total = 0.0;
 
         for (OrderRequest.OrderItemRequest itemReq : request.getItems()) {
-            ProductVariant variant = productVariantRepository.findById(itemReq.getProductVariantId())
+            ProductVariant variant = productVariantRepository
+                    .findById(itemReq.getProductVariantId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product variant not found"));
 
             OrderItem item = new OrderItem();
@@ -104,29 +97,22 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public OrderResponse getById(Long id) {
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order not found"));
         return toResponse(order);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<OrderResponse> getAll() {
-        return orderRepository.findAll().stream()
-                .map(this::toResponse)
-                .toList();
+        return orderRepository.findAll().stream().map(this::toResponse).toList();
     }
 
-<<<<<<< HEAD
-=======
     @Override
     public List<OrderResponse> getAllByUser(Long userId) {
         return orderRepository.findAllByUser_Id(userId).stream()
                 .map(this::toResponse)
                 .toList();
     }
-
->>>>>>> upstream/develop
 
     @Override
     public void delete(Long id) {
@@ -151,10 +137,7 @@ public class OrderServiceImpl implements OrderService {
                 OrderResponse.OrderItemResponse ir = new OrderResponse.OrderItemResponse();
                 ir.setProductVariantId(item.getProductVariant().getId());
                 ir.setProductName(item.getProductVariant().getProduct().getName());
-<<<<<<< HEAD
-=======
                 ir.setPathImage(item.getProductVariant().getImageUrl());
->>>>>>> upstream/develop
                 ir.setQuantity(item.getQuantity());
                 ir.setUnitPrice(item.getUnitPrice());
                 ir.setLineTotal(item.getLineTotal());

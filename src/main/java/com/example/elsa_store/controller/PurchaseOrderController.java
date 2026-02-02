@@ -1,14 +1,15 @@
-
 package com.example.elsa_store.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.entity.PurchaseOrder;
 import com.example.elsa_store.exception.ResourceNotFoundException;
 import com.example.elsa_store.repository.PurchaseOrderRepository;
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/purchase-orders")
@@ -27,7 +28,8 @@ public class PurchaseOrderController {
 
     @GetMapping("/{id}")
     public ApiResponse<PurchaseOrder> getById(@PathVariable Long id) {
-        PurchaseOrder item = purchaseOrderRepository.findById(id)
+        PurchaseOrder item = purchaseOrderRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("PurchaseOrder not found"));
         return ApiResponse.ok(item);
     }
@@ -39,9 +41,9 @@ public class PurchaseOrderController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<PurchaseOrder> update(@PathVariable Long id,
-                                           @Valid @RequestBody PurchaseOrder body) {
-        PurchaseOrder existing = purchaseOrderRepository.findById(id)
+    public ApiResponse<PurchaseOrder> update(@PathVariable Long id, @Valid @RequestBody PurchaseOrder body) {
+        PurchaseOrder existing = purchaseOrderRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("PurchaseOrder not found"));
         body.setId(existing.getId());
         return ApiResponse.ok(purchaseOrderRepository.save(body));

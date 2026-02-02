@@ -1,27 +1,20 @@
-
 package com.example.elsa_store.controller;
-
-import com.example.elsa_store.dto.request.PaymentRequest;
-import com.example.elsa_store.dto.response.PaymentResponse;
-<<<<<<< HEAD
-import com.example.elsa_store.service.PaymentService;
-=======
-import com.example.elsa_store.dto.response.PaymentVnPayResponse;
-import com.example.elsa_store.service.PaymentService;
-import jakarta.servlet.http.HttpServletRequest;
->>>>>>> upstream/develop
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
+import com.example.elsa_store.dto.request.PaymentRequest;
+import com.example.elsa_store.dto.response.PaymentResponse;
+import com.example.elsa_store.dto.response.PaymentVnPayResponse;
+import com.example.elsa_store.service.PaymentService;
+
 @RestController
-<<<<<<< HEAD
-@RequestMapping("/payments")
-=======
 @RequestMapping("/payment")
->>>>>>> upstream/develop
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -36,8 +29,7 @@ public class PaymentController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<PaymentResponse> update(@PathVariable Long id,
-                                                  @Valid @RequestBody PaymentRequest req) {
+    public ApiResponse<PaymentResponse> update(@PathVariable Long id, @Valid @RequestBody PaymentRequest req) {
         return ApiResponse.ok(paymentService.update(id, req));
     }
 
@@ -56,8 +48,6 @@ public class PaymentController {
     public ApiResponse<List<PaymentResponse>> getAll() {
         return ApiResponse.ok(paymentService.getAll());
     }
-<<<<<<< HEAD
-=======
 
     @GetMapping("/vn-pay")
     public ApiResponse<PaymentVnPayResponse> pay(HttpServletRequest request) {
@@ -73,5 +63,4 @@ public class PaymentController {
             return ApiResponse.fail("Failed", Integer.parseInt(status));
         }
     }
->>>>>>> upstream/develop
 }

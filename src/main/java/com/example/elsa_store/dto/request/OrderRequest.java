@@ -1,11 +1,10 @@
-
 package com.example.elsa_store.dto.request;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.validation.constraints.NotNull;
+
+import lombok.*;
 
 @Getter
 @Setter
@@ -15,10 +14,7 @@ import java.util.List;
 public class OrderRequest {
 
     private Long customerId;
-<<<<<<< HEAD
-=======
     private Long userId;
->>>>>>> upstream/develop
     private Long addressId;
 
     @NotNull
@@ -31,12 +27,20 @@ public class OrderRequest {
         @NotNull
         private Integer quantity;
 
-        public Long getProductVariantId() { return productVariantId; }
+        public Long getProductVariantId() {
+            return productVariantId;
+        }
 
-        public void setProductVariantId(Long productVariantId) { this.productVariantId = productVariantId; }
+        public void setProductVariantId(Long productVariantId) {
+            this.productVariantId = productVariantId;
+        }
 
-        public Integer getQuantity() { return quantity; }
+        public Integer getQuantity() {
+            return quantity;
+        }
 
-        public void setQuantity(Integer quantity) { this.quantity = quantity; }
+        public void setQuantity(Integer quantity) {
+            this.quantity = quantity;
+        }
     }
 }

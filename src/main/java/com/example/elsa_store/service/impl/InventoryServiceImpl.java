@@ -1,5 +1,9 @@
-
 package com.example.elsa_store.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.elsa_store.dto.request.InventoryRequest;
 import com.example.elsa_store.dto.response.InventoryResponse;
@@ -10,10 +14,6 @@ import com.example.elsa_store.mapper.InventoryMapper;
 import com.example.elsa_store.repository.InventoryRepository;
 import com.example.elsa_store.repository.ProductVariantRepository;
 import com.example.elsa_store.service.InventoryService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -22,15 +22,16 @@ public class InventoryServiceImpl implements InventoryService {
     private final InventoryRepository inventoryRepository;
     private final ProductVariantRepository productVariantRepository;
 
-    public InventoryServiceImpl(InventoryRepository inventoryRepository,
-                                ProductVariantRepository productVariantRepository) {
+    public InventoryServiceImpl(
+            InventoryRepository inventoryRepository, ProductVariantRepository productVariantRepository) {
         this.inventoryRepository = inventoryRepository;
         this.productVariantRepository = productVariantRepository;
     }
 
     @Override
     public InventoryResponse create(InventoryRequest req) {
-        ProductVariant variant = productVariantRepository.findById(req.getProductVariantId())
+        ProductVariant variant = productVariantRepository
+                .findById(req.getProductVariantId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product variant not found"));
         Inventory i = InventoryMapper.toEntity(req, variant);
         i = inventoryRepository.save(i);
@@ -39,9 +40,11 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryResponse update(Long id, InventoryRequest req) {
-        Inventory i = inventoryRepository.findById(id)
+        Inventory i = inventoryRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Inventory not found"));
-        ProductVariant variant = productVariantRepository.findById(req.getProductVariantId())
+        ProductVariant variant = productVariantRepository
+                .findById(req.getProductVariantId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product variant not found"));
         InventoryMapper.update(i, req, variant);
         return InventoryMapper.toResponse(i);
@@ -58,7 +61,8 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     @Transactional(readOnly = true)
     public InventoryResponse getById(Long id) {
-        Inventory i = inventoryRepository.findById(id)
+        Inventory i = inventoryRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Inventory not found"));
         return InventoryMapper.toResponse(i);
     }

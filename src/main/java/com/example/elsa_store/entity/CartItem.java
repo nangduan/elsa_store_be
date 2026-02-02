@@ -1,11 +1,16 @@
 package com.example.elsa_store.entity;
 
 import jakarta.persistence.*;
+
 import lombok.*;
 
 @Entity
-@Table(name = "cart_items",
-        uniqueConstraints = @UniqueConstraint(name = "uk_cart_variant", columnNames = {"cart_id", "product_variant_id"}))
+@Table(
+        name = "cart_items",
+        uniqueConstraints =
+                @UniqueConstraint(
+                        name = "uk_cart_variant",
+                        columnNames = {"cart_id", "product_variant_id"}))
 @Getter
 @Setter
 @NoArgsConstructor

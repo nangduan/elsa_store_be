@@ -1,11 +1,11 @@
-
 package com.example.elsa_store.repository;
 
-import com.example.elsa_store.entity.ProductVariant;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.example.elsa_store.entity.ProductVariant;
 
 @Repository
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, Long> {

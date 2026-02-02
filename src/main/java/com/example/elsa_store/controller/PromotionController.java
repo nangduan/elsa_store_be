@@ -1,14 +1,15 @@
-
 package com.example.elsa_store.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.dto.request.PromotionRequest;
 import com.example.elsa_store.dto.response.PromotionResponse;
 import com.example.elsa_store.service.PromotionService;
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/promotions")
@@ -26,8 +27,7 @@ public class PromotionController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<PromotionResponse> update(@PathVariable Long id,
-                                                    @Valid @RequestBody PromotionRequest req) {
+    public ApiResponse<PromotionResponse> update(@PathVariable Long id, @Valid @RequestBody PromotionRequest req) {
         return ApiResponse.ok(promotionService.update(id, req));
     }
 

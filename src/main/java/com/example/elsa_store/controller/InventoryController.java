@@ -1,14 +1,15 @@
-
 package com.example.elsa_store.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.dto.request.InventoryRequest;
 import com.example.elsa_store.dto.response.InventoryResponse;
 import com.example.elsa_store.service.InventoryService;
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/inventories")
@@ -26,8 +27,7 @@ public class InventoryController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<InventoryResponse> update(@PathVariable Long id,
-                                                    @Valid @RequestBody InventoryRequest req) {
+    public ApiResponse<InventoryResponse> update(@PathVariable Long id, @Valid @RequestBody InventoryRequest req) {
         return ApiResponse.ok(inventoryService.update(id, req));
     }
 

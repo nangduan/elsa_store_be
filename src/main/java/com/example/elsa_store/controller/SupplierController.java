@@ -1,14 +1,15 @@
-
 package com.example.elsa_store.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.example.elsa_store.dto.common.ApiResponse;
 import com.example.elsa_store.dto.request.SupplierRequest;
 import com.example.elsa_store.dto.response.SupplierResponse;
 import com.example.elsa_store.service.SupplierService;
-import jakarta.validation.Valid;
-import com.example.elsa_store.dto.common.ApiResponse;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/suppliers")
@@ -26,8 +27,7 @@ public class SupplierController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<SupplierResponse> update(@PathVariable Long id,
-                                                   @Valid @RequestBody SupplierRequest req) {
+    public ApiResponse<SupplierResponse> update(@PathVariable Long id, @Valid @RequestBody SupplierRequest req) {
         return ApiResponse.ok(supplierService.update(id, req));
     }
 

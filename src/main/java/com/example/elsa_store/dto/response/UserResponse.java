@@ -1,4 +1,3 @@
-
 package com.example.elsa_store.dto.response;
 
 public class UserResponse {
@@ -10,27 +9,51 @@ public class UserResponse {
     private String fullName;
     private Boolean enabled;
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public String getPhone() { return phone; }
+    public String getPhone() {
+        return phone;
+    }
 
-    public void setPhone(String phone) { this.phone = phone; }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    public String getFullName() { return fullName; }
+    public String getFullName() {
+        return fullName;
+    }
 
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-    public Boolean getEnabled() { return enabled; }
+    public Boolean getEnabled() {
+        return enabled;
+    }
 
-    public void setEnabled(Boolean enabled) { this.enabled = enabled; }
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 }

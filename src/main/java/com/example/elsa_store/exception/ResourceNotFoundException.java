@@ -1,4 +1,3 @@
-
 package com.example.elsa_store.exception;
 
 public class ResourceNotFoundException extends AppException {
@@ -6,4 +5,3 @@ public class ResourceNotFoundException extends AppException {
         super(ErrorCode.NOT_FOUND, message);
     }
 }
-
